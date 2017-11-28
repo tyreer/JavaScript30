@@ -28,3 +28,20 @@ _if (!audio) __return__;_
 _audio.__currentTime__ = 0;_
 
 + Prevents needing to wait until audio element finishes to fire a new _play()_ action.
+
+##### Robert's solution
++ Breaks out the sound and styling operations into two distinct functions
+
+### 02 - JS and CSS Clock
+![](./Screens/2clock.png)
+
+__const secondsDegrees = ((seconds / 60) * 360) + 90;__
+
++ Easy to logically follow at a glance
+
+__setInterval__(setDate, 1000);
+
++ No need to add _window._ before hand
+
+##### Robert's solution
++ Calls the minute and hour setters only when necessary rather than every second

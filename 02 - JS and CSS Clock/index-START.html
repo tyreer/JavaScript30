@@ -62,12 +62,56 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
     }
+
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    let timeoutID, rotationSeconds, rotationMinutes, rotationHours;
+
+    function setSeconds() {
+      timeoutID = window.setTimeout(moveSeconds, 1000);
+    }
+
+    function moveSeconds() {
+      const secondTimer = new Date();
+      rotationSeconds = (secondTimer.getSeconds() * 6 + 90);
+
+      if (rotationSeconds === 0) {
+        moveMinutes(secondTimer);
+      }
+
+      secondHand.style.transform=`rotate(${rotationSeconds}deg)`;
+      setSeconds();
+    }
+
+    function moveMinutes(secondTimer) {
+      rotationMinutes = (secondTimer.getMinutes() * 6 + 90);
+      minuteHand.style.transform=`rotate(${rotationMinutes}deg)`;
+
+      if (rotationMinutes === 0) {
+        moveHour();
+      }
+    }
+
+    function moveHour(secondTimer) {
+      rotationHours = (secondTimer.getHours() * 15 + 90);
+      hourHand.style.transform=`rotate(${rotationHours}deg)`;
+    }
+
+    let now = new Date();
+
+    setSeconds();
+    moveSeconds(now);
+    moveMinutes(now);
+    moveHour(now);
 
   </script>
 </body>
