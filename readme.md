@@ -33,7 +33,8 @@ _audio.__currentTime__ = 0;_
 + Breaks out the sound and styling operations into two distinct functions
 
 ### 02 - JS and CSS Clock
-![](./Screens/2clock.png)
+![](./Screens/2Clock.png)
+
 
 __const secondsDegrees = ((seconds / 60) * 360) + 90;__
 
