@@ -33,6 +33,7 @@
       font-family: 'helvetica neue', sans-serif;
       font-weight: 100;
       font-size: 50px;
+      --themeColor:#FF0000;
     }
 
     .controls {
@@ -42,9 +43,31 @@
     input {
       width:100px;
     }
+
+    .hl {
+      color: var(--themeColor);
+    }
+
+    img {
+      background-color: var(--themeColor);
+      padding: 20px;
+    }
   </style>
 
   <script>
+    const colorInput = document.querySelector("input[name='base']");
+    const body = document.querySelector("body");
+    const bodyStyles = window.getComputedStyle(document.body);
+    let themeColor = bodyStyles.getPropertyValue('--themeColor');
+
+    colorInput.setAttribute("value",themeColor);
+
+    colorInput.addEventListener('change', updateCssVar);
+
+    function updateCssVar() {
+      body.style.--themeColor = this.value;
+    }
+
   </script>
 
 </body>
