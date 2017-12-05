@@ -139,13 +139,13 @@ const sortedInventors = inventors.__sort__((inventorA, inventorB) => inventorA.y
 
 + At a minimum then, if I want to avoid the ternary and explicitly returning -1 vs 1, I'd need to pass in a basic _compareFunction_ as below:
 
-``` var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200]; ```
+var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200];
 
-``` function compareNumbers(a, b) {
+function compareNumbers(a, b) {
   return a - b;
-} ```
+}
 
-``` mixedNumericArray.sort(compareNumbers); ```
+mixedNumericArray.sort(compareNumbers);
 
 + Bos's solution for (7) sort by last name is still a bit baffling to me. Since all the names start with their last name first and we're comparing strings, can't we simply run the default sort?
-```const sortedPeople = people.sort();```
+const sortedPeople = people.sort();
