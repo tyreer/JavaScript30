@@ -101,10 +101,12 @@ const totalYears = inventors.__reduce__((total, inventor) => {
 + The second _initialValue_ parameter is key for a reliable reduce
 
 const category = document.querySelector('.mw-category');
+
 const links = Array.from(__category.querySelectorAll('a')__);
+
 const de = links
-            .map(link => __link.textContent__)
-            .filter(streetName => __streetName.includes('de')__);
+.map(link => __link.textContent__)
+.filter(streetName => __streetName.includes('de')__);
 
 + Nice demo of targeting via the console.
 + _querySelectorAll_ is getting called to further filter through the category results
@@ -115,8 +117,6 @@ const alpha = people.sort((lastOne, nextOne) => {
   __const [aLast, aFirst] = lastOne.split(', ')__;
 
 + Elegant munging into a two-index array via split
-
-``` const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ]; ```
 
 ``` const transportation = data.reduce((obj, item) => {
   if (!obj[item]) {
