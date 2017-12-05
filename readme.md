@@ -73,9 +73,79 @@ inputs.forEach(input => input.addEventListener(__'mousemove'__, handleUpdate));
 + _mousemove_ event triggers anytime mouse hovers over element. Used here to handle dragging the sliders and updating the UI
 
 __const suffix = this.dataset.sizing || '';__
-__document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);__
+__document.documentElement.style.setProperty(--${this.name}, this.value + suffix);__
 
 + Reaching into document to set the variable with the changed input's value
 
-#### Robert Notes
+#### Robert notes
 + _mousemove_ seems to be calling JS to set the property unnecessarily. The variable value and thus UI is still only being updated once the value changes, but might be preferable to only trigger handleUpdate if mouse/touch down event is active.
+
+### 04 - Array Cardio Day 1
+
+const birthdateInventors = inventors.__filter__(inventor => (inventor.year >= 1500 && inventor.year < 1600));
+
++ Pass filter() a function with a test to implement on all items in an array. Returns new array with passing elements.
+
+const fullNameInventors = inventors.__map__(inventor => `${inventor.first} ${inventor.last}`)
+
++ Pass map() a function and it will return a new array with the function executed on each element of the original array
+
+const ordered = inventors.__sort__((a, b) => a.year > b.year ? 1 : -1);
+
++ Compares two items in an array and explicitly says a larger year should be sorted at a later index (returns greater than 0, or 1)
+
+const totalYears = inventors.__reduce__((total, inventor) => {
+  return total + (inventor.passed - inventor.year);
+}__, 0__);
+
++ The second _initialValue_ parameter is key for a reliable reduce
+
+const category = document.querySelector('.mw-category');
+const links = Array.from(__category.querySelectorAll('a')__);
+const de = links
+            .map(link => __link.textContent__)
+            .filter(streetName => __streetName.includes('de')__);
+
++ Nice demo of targeting via the console.
++ _querySelectorAll_ is getting called to further filter through the category results
++ I'd probably just write ```const category = document.querySelectorAll('.mw-category a');```
++ And use: ```[...category].map()```
+
+const alpha = people.sort((lastOne, nextOne) => {
+  __const [aLast, aFirst] = lastOne.split(', ')__;
+
++ Elegant munging into a two-index array via split
+
+``` const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ]; ```
+
+``` const transportation = data.reduce((obj, item) => {
+  if (!obj[item]) {
+    obj[item] = 0;
+  }
+  obj[item]++;
+  return obj;
+}, {}); ```
+
++ _reduce_ with an empty object as _initialValue_
++ Both adding up instances and constructing a data object
+
+#### Robert solutions
+
+const sortedInventors = inventors.__sort__((inventorA, inventorB) => inventorA.year - inventorB.year);
+
++ Sort can determine order based on any returned value greater than 0 or less than 0. In this case, simply testing if one year has a higher number than another _would at first seem_ preferable if a bit less transparent than explicitly returning -1 or 1.
+
++ YET, MDN indicates that not only do browsers have varying algorithms to execute sort, but "If _compareFunction_ is not supplied, elements are sorted by converting them to strings and comparing strings in Unicode code point order...because numbers are converted to strings, "80" comes before "9" in Unicode order."
+
++ At a minimum then, if I want to avoid the ternary and explicitly returning -1 vs 1, I'd need to pass in a basic _compareFunction_ as below:
+
+``` var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200]; ```
+
+``` function compareNumbers(a, b) {
+  return a - b;
+} ```
+
+``` mixedNumericArray.sort(compareNumbers); ```
+
++ Bos's solution for (7) sort by last name is still a bit baffling to me. Since all the names start with their last name first and we're comparing strings, can't we simply run the default sort?
+```const sortedPeople = people.sort();```
