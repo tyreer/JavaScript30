@@ -118,13 +118,13 @@ const alpha = people.sort((lastOne, nextOne) => {
 
 + Elegant munging into a two-index array via split
 
-``` const transportation = data.reduce((obj, item) => {
+const transportation = data.__reduce__((obj, item) => {
   if (!obj[item]) {
     obj[item] = 0;
   }
   obj[item]++;
   return obj;
-}, {}); ```
+}, __{}__);
 
 + _reduce_ with an empty object as _initialValue_
 + Both adding up instances and constructing a data object
