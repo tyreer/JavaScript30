@@ -10,7 +10,9 @@ Grab the course at [https://JavaScript30.com](https://JavaScript30.com)
 _addEventListener.(’__transitionend__’, removeTransition)_
 + On all divs with .key classes, listen for the _transition end_ and do a callback.
 
-___e.propertyName___
+```JavaScript
+e.propertyName
+```
 
 + All the properties that are transitioning.
 Here just choosing the longest one associated with the div the transitions are taking place on.
@@ -148,4 +150,64 @@ function compareNumbers(a, b) {
 mixedNumericArray.sort(compareNumbers);
 
 + Bos's solution for (7) sort by last name is still a bit baffling to me. Since all the names start with their last name first and we're comparing strings, can't we simply run the default sort?
+
 const sortedPeople = people.sort();
+
+### 05 - Flex Panel Gallery
+
++ Nesting flex containers is maybe not as dirty as it feels? Display flex on both outer and inner divs.
+
++ One value of number type = flex-grow
+```css
+flex: 1;
+```
++ Might be desirable to use auto which means both
+```css
+flex: auto;
+flex: 1 1 auto;
+```
++ Or just explicitly say
+```css
+flex-grow: 1;
+```
++ flex: _grow, shrink, basis_
+
++ Five times other flex items with _flex: 1_
+```css
+.panel.open {
+  flex: 5;
+  font-size:40px;
+}
+```
++ Universal selector allows general first-child in a context
+```css
+.panel > *:first-child {
+  transform: translateY(-100%);
+}
+```
++ Transform to start an animation off screen (_still problematic for screen readers though_)
+
++ __Toggle()__ is pretty widely supported, but only accepts one value at a time
+```JavaScript
+function toggleClass() {
+  this.classList.toggle('open')
+  this.classList.toggle('open-active')
+}
+```
+
+#### Robert solutions
+
++ This works because __event.currentTarget__:
+
+> always refers to the element to which the event handler has been attached, as opposed to event.target which identifies the element on which the event occurred.
+
+```JavaScript
+const toggleClass = (e) => {
+  e.currentTarget.classList.contains('open')
+  ?    e.currentTarget.classList.remove('open', 'open-active')
+  :  e.currentTarget.classList.add('open', 'open-active')
+  }
+  ```
+
++ Initially tried __event.target__ but that only hit the <p> tags that were being clicked, which didn't works
++ Arrow function won't have __this__ so to use Bos solution need named function
