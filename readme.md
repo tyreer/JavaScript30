@@ -211,3 +211,50 @@ const toggleClass = (e) => {
 
 + Initially tried __event.target__ but that only hit the <p> tags that were being clicked, which didn't works
 + Arrow function won't have __this__ so to use Bos solution need named function
+
+### 06 - Type Ahead
+
++ Endpoint in const allows _fetch()_ to read much cleaner
++ _cities_ gets type definition and const and then has __JSON object translated into array__ via __push() + spread__
++ _fetch()_ promise handling with _then()_    
+```JavaScript
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const cities = [];
+fetch(endpoint)
+  .then(data => data.json())
+  .then(data =>  cities.push(...data));
+  ```
++ __filter()__ on data array
++ __new RegExp(wordToMatch, 'gi')__ useful way to make a regex. _g_ = global (Across entire string). _i_ = insensitive to case
++ __match()__ condition in _filter()_ satisfies its functionality in a bit of weird way. The return only matters if it is interpreted as _true_ or _null_. The actual matched array from the _match()_ call is only used to say, "yes any match exists, so include this object from the _cities_ array in the returned filtered array"
+  ```JavaScript
+  function findMatches(wordToMatch, cities) {
+    return cities.filter(place => {
+      const regex = new RegExp(wordToMatch, 'gi')
+      return place.city.match(regex) || place.state.match(regex);
+    });
+  }
+  ```
++ _this.value_ is the input value and _displayMatches()_ is called on _keyup_
++ __map()__ on a data array to generate markup feels similar to React
++ __return a string literal__ of markup is blowing my mind
++ __join('')__ is necessary to translate from the array of _map()_ into one big string of HTML
++ __innerHTML__ used on a _<ul>_ to populate a list
++ __replace()__ used to wrap the matched input from the text box in the highlight span
+  ```JavaScript
+  function displayMatches() {
+    const matchArray = findMatches(this.value, cities)
+    const html = matchArray.map(match => {
+      const regex = new RegExp(this.value, 'gi');
+      const cityMatch = match.city.replace(regex, `<span class="hl">${this.value}</span>`);
+      const stateMatch = match.state.replace(regex, `<span class="hl">${this.value}</span>`);
+      return `
+      <li>
+        <span class="name">${cityMatch}, ${stateMatch}</span>
+        <span class="population">${match.population}</span>
+      </li>
+      `;
+    }).join('');
+    suggestions.innerHTML = html;
+  }
+    ```
