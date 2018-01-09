@@ -204,19 +204,16 @@ function toggleClass() {
 ```JavaScript
 const toggleClass = (e) => {
   e.currentTarget.classList.contains('open')
-  ?    e.currentTarget.classList.remove('open', 'open-active')
+  ?  e.currentTarget.classList.remove('open', 'open-active')
   :  e.currentTarget.classList.add('open', 'open-active')
   }
   ```
 
 + Initially tried __event.target__ but that only hit the <p> tags that were being clicked, which didn't works
-+ Arrow function won't have __this__ so to use Bos solution need named function
++ Arrow function won't allow use of __this__, so to use Bos solution need a _named_ function
 
 ### 06 - Type Ahead
 
-+ Endpoint in const allows _fetch()_ to read much cleaner
-+ _cities_ gets type definition and const and then has __JSON object translated into array__ via __push() + spread__
-+ _fetch()_ promise handling with _then()_    
 ```JavaScript
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 const cities = [];
@@ -224,37 +221,124 @@ fetch(endpoint)
   .then(data => data.json())
   .then(data =>  cities.push(...data));
   ```
++ Endpoint in const allows _fetch()_ to read much cleaner
++ _cities_ gets type definition and const and then has __JSON object translated into array__ via __push() + spread__
++ _fetch()_ promise handling with _then()_    
+
+```JavaScript
+function findMatches(wordToMatch, cities) {
+  return cities.filter(place => {
+    const regex = new RegExp(wordToMatch, 'gi')
+    return place.city.match(regex) || place.state.match(regex);
+  });
+}
+```
 + __filter()__ on data array
 + __new RegExp(wordToMatch, 'gi')__ useful way to make a regex. _g_ = global (Across entire string). _i_ = insensitive to case
 + __match()__ condition in _filter()_ satisfies its functionality in a bit of weird way. The return only matters if it is interpreted as _true_ or _null_. The actual matched array from the _match()_ call is only used to say, "yes any match exists, so include this object from the _cities_ array in the returned filtered array"
-  ```JavaScript
-  function findMatches(wordToMatch, cities) {
-    return cities.filter(place => {
-      const regex = new RegExp(wordToMatch, 'gi')
-      return place.city.match(regex) || place.state.match(regex);
-    });
-  }
+
+```JavaScript
+function displayMatches() {
+  const matchArray = findMatches(this.value, cities)
+  const html = matchArray.map(match => {
+    const regex = new RegExp(this.value, 'gi');
+    const cityMatch = match.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateMatch = match.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    return `
+    <li>
+      <span class="name">${cityMatch}, ${stateMatch}</span>
+      <span class="population">${match.population}</span>
+    </li>
+    `;
+  }).join('');
+  suggestions.innerHTML = html;
+}
   ```
 + _this.value_ is the input value and _displayMatches()_ is called on _keyup_
 + __map()__ on a data array to generate markup feels similar to React
 + __return a string literal__ of markup is blowing my mind
 + __join('')__ is necessary to translate from the array of _map()_ into one big string of HTML
-+ __innerHTML__ used on a _<ul>_ to populate a list
++ __innerHTML__ used on a _ul_ to populate a list
 + __replace()__ used to wrap the matched input from the text box in the highlight span
-  ```JavaScript
-  function displayMatches() {
-    const matchArray = findMatches(this.value, cities)
-    const html = matchArray.map(match => {
-      const regex = new RegExp(this.value, 'gi');
-      const cityMatch = match.city.replace(regex, `<span class="hl">${this.value}</span>`);
-      const stateMatch = match.state.replace(regex, `<span class="hl">${this.value}</span>`);
-      return `
-      <li>
-        <span class="name">${cityMatch}, ${stateMatch}</span>
-        <span class="population">${match.population}</span>
-      </li>
-      `;
-    }).join('');
-    suggestions.innerHTML = html;
-  }
-    ```
+
+### 07 - Array Cardio 💪💪 Day 2
+```JavaScript
+const people = [
+  { name: 'Wes', year: 1988 },
+  { name: 'Kait', year: 1986 },
+  ... ]
+```
+
+```JavaScript
+const hasAdult = people.some(person => ((new Date()).getFullYear()) - person.year >= 19);
+const allAdults = people.every(person => ((new Date()).getFullYear()) - person.year >= 19);
+```
++ __some()__ checks each element in array and returns boolean if condition is _ever_ true in set
++ __every()__ checks each element in array and returns boolean if condition is _always_ true in set
++ Both array methods have thorough browser support
++ __new Date().getFullYear()__ gives current year
+
+```JavaScript
+const comments = [
+  { text: 'Love this!', id: 523423 },
+  { text: 'Super good', id: 823423 },
+  ... ]
+  ```
+```JavaScript
+const comment = comments.find(comment => comment.id === 823423);
+const index = comments.findIndex(comment => comment.id === 823423);
+```
++ __find()__ returns value of _first_ element in an array where a condition is true. In this case, the element is the two-attribute object.
++ __findIndex()__ returns the index of the _first_ element to satisfy a condition
++ No IE support currently on these two, but full support otherwise and polyfill on MDN.
+
+```JavaScript
+const newComments = [
+  ...comments.slice(0, index),
+  ...comments.slice(index + 1)
+];
+```
++ __Remove an element__ from an array using __slice()__
++ One parameter = begin at this index and go to end of array
++ Two parameters =  return a shallow copy of the portion of the array from index of first value to the second (non-inclusive)
++ __Pure function__ so original array isn't changed and it __always returns the same results given the same arguments__.
++ Useful in Redux
++ In contrast, _splice()_ mutates the original array, which is bad
+
+### 08 - HTML5 Canvas
+```JavaScript
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+```
++ Probably more reliable than 100vh x 100vw
+
+```JavaScript
+function draw(e) {
+  if (!isDrawing) return; // stop the fn from running when they are not moused down
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  ...
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+```
+
++ __if (condition) return__ = nice pattern to use with isHavingState _flag_ to ensure function stops if desired
++ __hsl()__ color option allows rainbows since the hue can endlessly roll on through ROYGBIV
++ Setting multiple values via array destructuring
+
+```JavaScript
+if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+  direction = !direction;
+}
+```
++ Interesting way to toggle a flag
+
+```JavaScript
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+});
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseout', () => isDrawing = false);
+````
+
++ Coordinating _isDrawing_ flag at beginning of _draw_ with _mousedown_ and _mouseup/mouseout_ to make draw on __drag__ only.
