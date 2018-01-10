@@ -339,6 +339,42 @@ canvas.addEventListener('mousedown', (e) => {
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', () => isDrawing = false);
 canvas.addEventListener('mouseout', () => isDrawing = false);
-````
+```
 
 + Coordinating _isDrawing_ flag at beginning of _draw_ with _mousedown_ and _mouseup/mouseout_ to make draw on __drag__ only.
+
+### 09 - Dev Tools Domination
+
++ In _Elements_ panel of dev tools: __Break on... attribute modification__ to step through JS that changes any attributes
+
+```JavaScript
+console.assert(p.classList.contains('ouch'), 'This element does not have ouch!');
+```
++ __console.assert()__ Assertion testing will flag if failing but remain silent if condition is met.
+
+```JavaScript
+console.dir(p);
+```
++ __console.dir()__ allows dom element to be inspected for methods and attributes
+
+```JavaScript
+dogs.forEach(dog => {
+  console.groupCollapsed(`${dog.name}`);
+  console.log(`This is ${dog.name}`);
+  console.log(`${dog.name} is ${dog.age} years old`);
+  console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+  console.groupEnd(`${dog.name}`);
+});
+```
++ __console.group()__ useful in ordering large outputs that iterate over data
+
+```JavaScript
+console.time('fetching data');
+fetch('https://api.github.com/users/wesbos')
+  .then(data => data.json())
+  .then(data => {
+    console.timeEnd('fetching data');
+    console.log(data);
+  });
+```
++ __console.time()__ gives execution time
