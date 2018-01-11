@@ -378,3 +378,35 @@ fetch('https://api.github.com/users/wesbos')
   });
 ```
 + __console.time()__ gives execution time
+
+### 09 - Hold Shift ⬇️ to Check Multiple Checkboxes
+
++ Not sure I follow what the fragility liability is in my solution
++ Bos solution is an insightful use of flags to switch behaviour within a forEach() loop.
+
+```JavaScript
+const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+```
++ This is much more specific than what I used, which was simply _'input'_. Ensures desired selector scope.
+
+```JavaScript
+if (e.shiftKey && this.checked) {
+  ```
++ __clickEvent.shiftKey__ avoids the need for keydown event listener on window
+
+> The MouseEvent.shiftKey read-only property indicates if the shift key was pressed (true) or not (false) when the event occurred.
+
++ __this.checked__ = only execute if this checkbox is being checked at time of click
+
+```JavaScript
+checkboxes.forEach(checkbox => {
+  if (checkbox === this || checkbox === lastChecked) {
+    inBetween = !inBetween;
+  }
+  if (inBetween) {
+    checkbox.checked = true;
+  }
+});
+```
++ First _if_ condition allows either checked box to trigger toggle to true and the box further along the index to toggle to false.
++ __A toggle and a conditional execution__ both inside a _forEach()_ loop
