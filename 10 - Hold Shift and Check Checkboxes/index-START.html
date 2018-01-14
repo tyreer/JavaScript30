@@ -98,7 +98,52 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+    const inputs = [...document.querySelectorAll('input')];
+
+    let mostRecentlyClicked = null;
+    let isKeyDown = false;
+
+    function markRecent() {
+      const  thisClickedIndex = inputs.findIndex(el => el === this);
+
+      if (isKeyDown && mostRecentlyClicked) {
+        const selectedInputs = [];
+
+        if (thisClickedIndex > mostRecentlyClicked) {
+         selectedInputs.push(...inputs.slice(mostRecentlyClicked, thisClickedIndex+1));
+       } else if (thisClickedIndex < mostRecentlyClicked) {
+          selectedInputs.push(...inputs.slice(thisClickedIndex, mostRecentlyClicked+1));
+        }
+        selectedInputs.forEach(el => el.checked = true);
+      }
+
+      mostRecentlyClicked = thisClickedIndex;
+    }
+
+    function markKeyHold(e) {
+      if (e.keyCode === 16) {
+        isKeyDown = true;
+      }
+    }
+
+    function markKeyRelease(e) {
+      if (e.keyCode === 16) {
+        isKeyDown = false;
+      }
+    }
+
+
+
+
+
+    inputs.forEach( el => el.addEventListener('click', markRecent));
+    window.addEventListener('keydown', markKeyHold);
+    window.addEventListener('keyup', markKeyRelease);
+
+
+  </script>
+
 </body>
+
 </html>

@@ -410,3 +410,88 @@ checkboxes.forEach(checkbox => {
 ```
 + First _if_ condition allows either checked box to trigger toggle to true and the box further along the index to toggle to false.
 + __A toggle and a conditional execution__ both inside a _forEach()_ loop
+
+### 11 - Custom Video Player
+
+```HTML
+<button data-skip="-10" class="player__button">« 10s</button>
+<button data-skip="25" class="player__button">25s »</button>
+```
+```JavaScript
+const skipButtons = player.querySelectorAll('[data-skip]');
+function skip() {
+  video.currentTime += parseFloat(this.dataset.skip);
+}
+skipButtons.forEach(button => button.addEventListener('click', skip));
+```
++ Using __data attributes__ to query select DOM elements
++ Using __this.dataset__ to specify outcome—as in, it doesn't matter if this is the fast forward or rewind button, all that matters is the value in the data attribute _skip_
++ My instinct was to use parseInt(), but really __parseFloat()__ is a more sensible default since it will preserve decibels
+
+```HTML
+<input type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" value="1">
+<input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
+```
+```JavaScript
+const ranges = player.querySelectorAll('.player__slider');
+function handleRangeUpdate() {
+  video[this.name] = this.value;
+}
+ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
+ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
+```
++ __Bracket notation__ allows the clicked DOM element to provide the property to update on the target _video_ element.
++ For this to work, the __name attribute__ of the input elements needs to correspond with a property that exists on the target video element.
++ Why is _time_ a "property" rather than an "attribute" in both _video[time]_ +  _video.time_?
+
+```JavaScript
+function togglePlay() {
+  const method = video.paused ? 'play' : 'pause';
+  video[method]();
+}
+```
++ __Setting _const_ with ternary__
++ __Bracket notation__ again used to determine which method to call on _video_
+
+```JavaScript
+const togglePlay = () => {
+  video.paused
+  ? video.play()
+  : video.pause();
+}
+```
++ This was my solution
+
+```JavaScript
+function updateButton() {
+  const icon = this.paused ? '►' : '❚ ❚';
+  toggle.textContent = icon;
+}
+```
++ __textContent__ used to set the content of the button
+
+```JavaScript
+function handleProgress() {
+  const percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+}
+video.addEventListener('timeupdate', handleProgress);
+```
++ __timeupdate__ fires every time the video progresses
++ __Setting style via dot notation__ 
+
+```JavaScript
+function scrub(e) {
+  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+  video.currentTime = scrubTime;
+}
+let mousedown = false;
+progress.addEventListener('click', scrub);
+progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
+progress.addEventListener('mousedown', () => mousedown = true);
+progress.addEventListener('mouseup', () => mousedown = false);
+```
++ __mouseEvent.offsetX__ gives the mouse position within the target node
++ Not knowing about that, I manually calculated using __this.getBoundingClientRect().x__, which is also worth knowing about
++ __progress.offsetWidth__ gives the width of the DOM element
++ Callbacks harness a _mousedown_ __flag and shortcircuiting__
