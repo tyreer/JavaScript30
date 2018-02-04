@@ -7,6 +7,31 @@
 </head>
 <body>
 <script>
+
+// const code = `ArrowUp ArrowDown ArrowUp ArrowDown ArrowLeft ArrowRight ArrowLeft ArrowRight a b a b Enter`;
+  const userKeySequence = [];
+  const code = 'win'
+
+  window.addEventListener('keyup', e => {
+    userKeySequence.push(e.key)
+    // userKeySequence.splice(0, userKeySequence.length - code.length)
+    const userCode = userKeySequence.join('');
+
+    const userCode = [
+      ...userKeySequence.slice(-code.length)
+    ].join('');
+
+    if (userCode.includes(code)) {
+      console.log('boo yah');
+    }
+
+    // if (userCode === code) {
+    //   console.log('YESASA');
+    // }
+
+  })
+
+
 </script>
 </body>
 </html>

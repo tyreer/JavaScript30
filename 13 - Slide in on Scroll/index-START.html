@@ -58,6 +58,35 @@
       };
     }
 
+    const imgs = document.querySelectorAll('.slide-in');
+
+    const checkScroll = () => {
+        imgs.forEach(img => {
+          const isOnScreen = (window.scrollY + window.innerHeight) > (img.offsetTop - (img.height/2));
+          const isActive = img.classList.contains('.active');
+
+          if (isOnScreen && !isActive) {
+            img.classList.add('active')
+          }
+        })
+      }
+
+    window.addEventListener('scroll', debounce(checkScroll))
+
+
+    // const imgs = document.querySelectorAll('.slide-in');
+    //
+    // window.addEventListener('scroll', () => {
+    //   imgs.forEach(img => {
+    //     const isOnScreen = window.scrollY > img.offsetTop - img.height;
+    //     const isActive = img.classList.contains('.active');
+    //
+    //     if (isOnScreen && !isActive) {
+    //       img.classList.add('active')
+    //     }
+    //   })
+    // })
+
   </script>
 
   <style>

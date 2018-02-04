@@ -35,6 +35,61 @@
   </style>
 
 <script>
+
+const hero = document.querySelector('.hero');
+const headerText = hero.querySelector('h1');
+const magnitude = 50;
+
+function animateShadow(e) {
+  const { offsetWidth: width, offsetHeight: height } = hero;
+  let { offsetX: x, offsetY: y } = e;
+
+  if (this !== e.target) {
+    x = x + e.target.offsetLeft;
+    y = y + e.target.offsetTop;
+  }
+
+  const xThrow = Math.round((x / width * magnitude) - (magnitude / 2));
+  const yThrow = Math.round((y / height * magnitude) - (magnitude / 2));
+
+  headerText.style.textShadow = `
+    ${xThrow*-1}px ${yThrow*-1}px 0 rgba(255,0,255,0.7)
+  `;
+
+}
+
+hero.addEventListener('mousemove', animateShadow);
+
+  // const hero = document.querySelector('.hero');
+  // const headerText = document.querySelector('h1');
+  //
+  //
+  // function animateShadow(e) {
+  //   const { offsetWidth: width, offsetHeight: height } = hero;
+  //   let { offsetX: x, offsetY: y } = e;
+  //
+  //   if (this !== e.target) {
+  //     x = x + e.target.offsetX;
+  //     y = y + e.target.offsetY;
+  //   }
+  //
+  //   shadowOffsetX = ((x - (width/2)) * -.03);
+  //   shadowOffsetY = ((y - (height/2)) * -.03);
+  //   // shadowOffsetY = (e.offsetY/ (this.offsetHeight/2)) * -50;
+  //
+  //   // headerText.style.textShadow= `${e.clientX / 5}px ${e.clientX / 5}px 0 rgba(0,0,0,1)`
+  //   headerText.style.textShadow= `${shadowOffsetX}px ${shadowOffsetY}px 0 rgba(0,0,0,1)`
+  // }
+  // // function animateShadow(e) {
+  // //   shadowOffsetX = ((e.offsetX - (this.offsetWidth/2)) * -.03);
+  // //   shadowOffsetY = ((e.offsetY - (this.offsetHeight/2)) * -.03);
+  // //   // shadowOffsetY = (e.offsetY/ (this.offsetHeight/2)) * -50;
+  // //
+  // //   // headerText.style.textShadow= `${e.clientX / 5}px ${e.clientX / 5}px 0 rgba(0,0,0,1)`
+  // //   headerText.style.textShadow= `${shadowOffsetX}px ${shadowOffsetY}px 0 rgba(0,0,0,1)`
+  // // }
+  //
+  // hero.addEventListener('mousemove', animateShadow)
 </script>
 </body>
 </html>
