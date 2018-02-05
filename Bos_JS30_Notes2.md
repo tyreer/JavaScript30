@@ -1,5 +1,5 @@
 # JavaScript30
-__Lessons 12–20__
+__Lessons 12–16__
 
 ### 12 - Key Sequence Detection
 
@@ -241,7 +241,8 @@ if(!e.target.matches('input')) return;
   }
 
   hero.addEventListener('mousemove', animateShadow);
-</script>```
+</script>
+```
 
 + __Destructuring attributes off an element__: _const { offsetWidth: width, offsetHeight: height } = hero;_
 + __offsetX__ and __offsetY__ will return position within target DOM node, so the values reset when hovering over the _H1_

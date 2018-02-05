@@ -44,8 +44,59 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  const list = document.querySelector('#bands');
 
+  const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+
+  // // sort array without articles
+  // const bandsFiltered = bands.map(band => {
+    // return band.replace(regex, '')
+  // }).sort();
+
+  // const bandsDisplay = []
+  // const bandsDisplay2 = bandsFiltered.map(band => {
+  //   return bands.map( bandArticle => {
+  //     if (bandArticle.includes(band)) {
+  //       bandsDisplay.push(bandArticle)
+  //     }
+  //   })
+  // })
+  // const bandsDisplay = []
+  // const bandsDisplay2 = bandsFiltered.map(band => {
+  //
+  //
+  // bands.map( (bandArticle, index) => {
+  //     if (bandArticle.includes(band)) {
+  //       bandsDisplay.push(bandArticle)
+  //     }
+  //   })
+  // })
+  const regex = new RegExp('The |a |an ', 'i');
+  const deArticle = (input) => input.replace(regex, '');
+  const sortedBands = bands.sort((a, b) => deArticle(a) < deArticle(b) ? -1 : 1);
+  const listHTML = sortedBands.map(band => {
+    return `
+    <li>${band}</li>
+    `
+  }).join('');
+
+  list.innerHTML = listHTML;
+
+  // const sortedBands = bands.sort((a, b) => { return deArticle(a) < deArticle(b) ? -1 : 1; })
+
+    // const noArticleA = a.replace(regex, '');
+    // const noArticleB = b.replace(regex, '');
+
+    // return noArticleA < noArticleB ? -1 : 1;
+
+  // })
+
+
+
+console.log(sortedBands);
+  // console.log(bandsFiltered);
+  // console.log(bandsDisplay);
 
 </script>
 
