@@ -182,6 +182,30 @@
     </li>
   </ul>
 <script>
+  const videos = [...document.querySelectorAll('[data-time]')];
+
+  const convertTime = (minSec) => {
+    const [mins, secs] = minSec.split(':').map(parseFloat)
+    return (mins * 60) + secs;;
+  }
+
+  const timeSum = videos.reduce((acc, cur) => {
+    return convertTime(cur.dataset.time) + acc;
+  }, 0);
+
+  let secondsLeft = timeSum;
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft = secondsLeft % 3600;
+
+  const mins = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+
+  console.log(hours, mins, secondsLeft);
+
+  // const date = new Date(null);
+  // date.setSeconds(timeSum);
+  // console.log(date.toISOString().substr(11, 8));
+
 </script>
 </body>
 </html>
