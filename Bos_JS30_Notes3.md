@@ -73,3 +73,9 @@ __Modulo/Remainder__
 + _73 % 60 = 13_
   + As in, _how many seconds remain beyond whole minutes_
   + __secondsLeft__ above
+
+### 19 - Webcam Fun
+
++ Browser sync start script!
+  + Easy hot reloading. No global install
+  + Check on mobile???
