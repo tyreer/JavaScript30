@@ -76,6 +76,37 @@ __Modulo/Remainder__
 
 ### 19 - Webcam Fun
 
-+ Browser sync start script!
-  + Easy hot reloading. No global install
-  + Check on mobile???
+__See projects files__
++ __canvas__
++ __video stream__
++ __debugger__ to prevent infinite loop
+
+```json
+"scripts": {
+  "start": "browser-sync start --server --files \"*.css, *.html, *.js\""
+},
+"devDependencies": {
+  "browser-sync": "^2.12.5"
+}
+```
++ __Browser sync__ start script!
+  + Easy hot reloading. No global install.
+  + Load on devices using wifi with external URL
+
+```JavaScript
+  const data = canvas.toDataURL('image/jpeg');
+  const link = document.createElement('a');
+  link.href = data;
+  link.setAttribute('download', 'handsome');
+  link.innerHTML = `<img src="${data}" alt="Handsome Man" />`;
+  strip.insertBefore(link, strip.firsChild);
+```
++ Creating an element and adding/setting its attributes in JS
++ __insertBefore()__
+
+```JavaScript
+red = pixels.data[i + 0];
+green = pixels.data[i + 1];
+blue = pixels.data[i + 2];
+alpha = pixels.data[i + 3];
+```

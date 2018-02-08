@@ -21,10 +21,24 @@ function paintToCanvas() {
   canvas.width = width;
   canvas.height = height;
 
-  console.log(width, height);
+  return setInterval(() => {
+    ctx.drawImage(video, 0, 0, width, height);
+  }, 16)
 }
 
-paintToCanvas();
+function takePhoto() {
+  snap.currentTime = 0;
+  snap.play();
+
+  const data = canvas.toDataURL('image/jpeg');
+  const link = document.createElement('a');
+  link.href = data;
+  link.setAttribute('download', 'fileTitleHere');
+  link.textContent = 'Download Image';
+  link.innerHTML = `<img src="${data}" alt="Test" />`
+  strip.insertBefore(link, strip.firstChild);
+}
+
 // getVideo();
 
-//10:35
+video.addEventListener('canplay', paintToCanvas)
