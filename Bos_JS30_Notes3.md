@@ -169,3 +169,32 @@ if(transcript.includes('London')) {
 recognition.addEventListener('end', recognition.start);
 ```
 + __end__ event
+
+### 21 - Geolocation
+
+### 22 - Follow Along Links
+
+__Key concept:__ Grabbing values off __getBoundingClientRect()__ and inserting them as __inline styles__
+  + Basically a __fancy hover__ state
+
++ Because there's only one _span_ element, animations track it across the page and illustrate where it's been and is going
+  + ...as opposed to hover, which doesn't convey causality with any sense of history.
+
+```JavaScript
+const triggers = document.querySelectorAll('a');
+
+const highlight = document.createElement('span');
+highlight.classList.add('highlight');
+document.body.append(highlight);
+
+function highlightLink() {
+  const linkCoordinates = this.getBoundingClientRect();
+  highlight.style.width = `${linkCoordinates.width}px`
+  highlight.style.height = `${linkCoordinates.height}px`
+  highlight.style.transform = `translate(${linkCoordinates.left + window.scrollX}px, ${linkCoordinates.top + window.scrollY}px)`;
+}
+
+triggers.forEach(trigger => { trigger.addEventListener('mouseenter', highlightLink)})
+```
++ __mouseenter__ event
++ __getBoundingClientRect()__ is super useful here
