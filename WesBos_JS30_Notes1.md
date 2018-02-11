@@ -5,7 +5,26 @@ Notes as I work through the Wes Bos course.
 Grab the course at [https://JavaScript30.com](https://JavaScript30.com)
 
 ### 01 - JavaScript Drum Kit
-![](./Screens/1DrumKit.png)
+```JavaScript
+function removeTransition(e) {
+  if (e.propertyName !== 'transform') return;
+  e.target.classList.remove('playing');
+}
+
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+  if (!audio) return;
+
+  key.classList.add('playing');
+  audio.currentTime = 0;
+  audio.play();
+}
+
+const keys = Array.from(document.querySelectorAll('.key'));
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+```
 
 _addEventListener.(’__transitionend__’, removeTransition)_
 + On all divs with .key classes, listen for the _transition end_ and do a callback.
@@ -35,8 +54,28 @@ _audio.__currentTime__ = 0;_
 + Breaks out the sound and styling operations into two distinct functions
 
 ### 02 - JS and CSS Clock
-![](./Screens/2Clock.png)
 
+```JavaScript
+function setDate() {
+  const now = new Date();
+
+  const seconds = now.getSeconds();
+  const secondsDegrees = ((seconds / 60) * 360) + 90;
+  secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+  const mins = now.getMinutes();
+  const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+  minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+  const hour = now.getHours();
+  const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+  hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+}
+
+setInterval(setDate, 1000);
+
+setDate();
+```
 
 __const secondsDegrees = ((seconds / 60) * 360) + 90;__
 
@@ -51,21 +90,53 @@ __setInterval__(setDate, 1000);
 
 
 ### 03 - CSS Variables
-(1)
-![](./Screens/3CSSVar_1.png)
-(2)
-![](./Screens/3CSSVar_2.png)
+```HTML
+<div class="controls">
+  <label for="spacing">Spacing:</label>
+  <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
+  <label for="blur">Blur:</label>
+  <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
 
-__:root {
-  --base: #ffc600;
-  --spacing: 10px;
-  --blur: 10px;
-  }__
+  <label for="base">Base Color</label>
+  <input id="base" type="color" name="base" value="#ffc600">
+</div>
 
-+ Declare CSS variables on _:root_
+<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
-__filter: blur(var(--blur))__;
+<style>
+  :root {
+    --base: #ffc600;
+    --spacing: 10px;
+    --blur: 10px;
+  }
+
+  img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+  }
+
+  .hl {
+    color: var(--base);
+  }
+```
+
+```JavaScript
+const inputs = document.querySelectorAll('.controls input');
+
+function handleUpdate() {
+  const suffix = this.dataset.sizing || '';
+  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+inputs.forEach(input => input.addEventListener('change', handleUpdate));
+inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+```
+
++ Declare CSS variables on __:root__
+
++ __filter: blur(var(--blur))__;
 
 + Filter style attribute on _img_ elements
 
@@ -74,8 +145,10 @@ inputs.forEach(input => input.addEventListener(__'mousemove'__, handleUpdate));
 + Even though the _inputs_ object is still a NodeList and not a proper array, can call _forEach_ on it
 + _mousemove_ event triggers anytime mouse hovers over element. Used here to handle dragging the sliders and updating the UI
 
-__const suffix = this.dataset.sizing || '';__
-__document.documentElement.style.setProperty(--${this.name}, this.value + suffix);__
+```JavaScript
+const suffix = this.dataset.sizing || '';
+document.documentElement.style.setProperty(--${this.name}, this.value + suffix);
+```
 
 + Reaching into document to set the variable with the changed input's value
 
@@ -478,7 +551,7 @@ function handleProgress() {
 video.addEventListener('timeupdate', handleProgress);
 ```
 + __timeupdate__ fires every time the video progresses
-+ __Setting style via dot notation__ 
++ __Setting style via dot notation__
 
 ```JavaScript
 function scrub(e) {

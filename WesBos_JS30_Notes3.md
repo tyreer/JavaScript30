@@ -1,5 +1,5 @@
 # JavaScript30
-__Lessons 17–__
+__Lessons 17–22__
 
 ### 17 - Sort Without Articles
 
@@ -171,6 +171,20 @@ recognition.addEventListener('end', recognition.start);
 + __end__ event
 
 ### 21 - Geolocation
++ __To simulate geolocation attributes:__ XCode -> location -> running
++ __To run dev tools in Xcode:__ Safari -> develop -> simulator  
+
+```JavaScript
+navigator.geolocation.watchPosition((data) => {
+  console.log(data);
+  speed.textContent = data.coords.speed;
+  arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+}, (err) => {
+  console.error(err);
+});
+```
++ __watchPosition()__
++ __textContent__
 
 ### 22 - Follow Along Links
 
