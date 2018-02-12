@@ -48,6 +48,19 @@ nav {
   z-index: 1;
 }
 
+nav.isSticky {
+  position: fixed;
+  top: 0;
+}
+
+nav.isSticky + .site-wrap {
+  margin-top: 147px;
+}
+
+nav.isSticky li.logo {
+  max-width: 120px;
+}
+
 nav ul {
   margin: 0;
   padding:0;

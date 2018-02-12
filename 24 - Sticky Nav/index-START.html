@@ -55,6 +55,19 @@
 
 <script>
 
+  const nav = document.querySelector('#main');
+  const navTop = nav.getBoundingClientRect().top;
+
+  function isNavSticky() {
+    if(window.scrollY > navTop) {
+      nav.classList.add('isSticky');
+    } else {
+      nav.classList.remove('isSticky');
+    }
+  }
+
+  window.addEventListener('scroll', isNavSticky);
+
 </script>
 
 </body>

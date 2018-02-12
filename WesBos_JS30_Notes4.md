@@ -75,3 +75,52 @@ stopButton.addEventListener('click', () => toggle(false));
 stopButton.addEventListener('click', toggle.bind(null, false));
 ```
 + Also possible to pass parameter to a callback with __bind__
+
+### 24 - Sticky Nav
+
+```JavaScript
+const nav = document.querySelector('#main');
+let topOfNav = nav.offsetTop;
+
+function fixNav() {
+  if(window.scrollY >= topOfNav) {
+    document.body.style.paddingTop = nav.offsetHeight + 'px';
+    document.body.classList.add('fixed-nav');
+  } else {
+    document.body.classList.remove('fixed-nav');
+    document.body.style.paddingTop = 0;
+  }
+}
+
+window.addEventListener('scroll', fixNav);
+```
++ __offsetTop__ as opposed to my use of _getBoundingClientRect().top_
++ Advantage of __programmatically setting__ _paddingTop_ with __offsetHeight__ is that there's no problem if font size, etc. changes
+
+```JavaScript
+document.body.classList.add('fixed-nav');
+```
++ __Add page state class to body__. If it's high up, easy to target anything affected
+
+```css
+li.logo {
+  max-width:0;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+.fixed-nav li.logo {
+  max-width:500px;
+}
+```
++ __max-width allows transitions__, but _width: auto_ does not. 500px value is simply something way larger than it would ever be. Flex is handling actual width.
+
+```css
+.site-wrap {
+  transform: scale(0.98);
+  transition: transform 0.5s;
+}
+body.fixed-nav .site-wrap {
+  transform: scale(1);
+}
+```
++ Nice UX effect to boost main content area via a __subtle scale transform__
