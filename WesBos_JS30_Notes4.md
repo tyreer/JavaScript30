@@ -124,3 +124,37 @@ body.fixed-nav .site-wrap {
 }
 ```
 + Nice UX effect to boost main content area via a __subtle scale transform__
+
+### 25 - Event Capture, Propagation, Bubbling
+
+First is capture: top down
+  + Arrow through layers
+Then bubble: back up
++ "bubble up"
+
+```JavaScript
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: true
+  }));
+```
++ Third argument is __options object__
+  + __capture__ here says to fire off click events on the initial event capture decent into inner DOM element
+  + "On the way down"
+  + Default is false
+
+  ```JavaScript
+  e.stopPropagation(); // stop bubbling!
+  ```
++ Won't trigger events on the parents on the way up
+ + Or _down_ if _capture_ is set to true
+
+  ```JavaScript
+
+    button.addEventListener('click', () => {
+      console.log('Click!!!');
+    }, {
+      once: true
+    });
+    ```
+  + __once__ = unbind after the event is fired (like, _removeEventListener_)
+  + For instance, in a checkout where the event should only ever fire once
