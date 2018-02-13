@@ -214,6 +214,48 @@
 </style>
 
 <script>
+// mouseover li
+  // add trigger-enter onto body
+  // programmatically set dropdownBackground height and width with getBoundingClientRect
+  // add open onto dropdownBackground
+
+  const navItems = document.querySelectorAll('.cool > li');
+  const dropdowns = document.querySelectorAll('.dropdown');
+  const nav = document.querySelector('.top');
+  const dropdownBackground = document.querySelector('.dropdownBackground');
+
+
+  function expandNav(index) {
+    nav.classList.add('trigger-enter');
+    // document.body.classList.add('trigger-enter');
+
+    navItems[index].classList.add('trigger-enter-active');
+    console.log(dropdowns[index].getBoundingClientRect().height);
+
+    const navHeight = nav.getBoundingClientRect().height;
+
+    dropdownBackground.style.height = `${dropdowns[index].getBoundingClientRect().height}px`;
+    dropdownBackground.style.width = `${dropdowns[index].getBoundingClientRect().width}px`;
+    dropdownBackground.style.top = `${dropdowns[index].getBoundingClientRect().top - navHeight + 20}px`;
+    dropdownBackground.style.left = `${dropdowns[index].getBoundingClientRect().left}px`;
+    dropdownBackground.classList.add('open');
+
+    // console.log(dropdowns[index]);
+  }
+
+  function collapseNav(index) {
+    nav.classList.remove('trigger-enter');
+    // document.body.classList.add('trigger-enter');
+
+    navItems[index].classList.remove('trigger-enter-active');
+    dropdownBackground.classList.remove('open');
+
+    // console.log(dropdowns[index]);
+  }
+
+  navItems.forEach((item, index) => item.addEventListener('mouseover', () => expandNav(index)));
+  navItems.forEach((item, index) => item.addEventListener('mouseout', () => collapseNav(index)));
+
 </script>
 
 </body>
