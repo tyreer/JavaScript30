@@ -158,3 +158,65 @@ Then bubble: back up
     ```
   + __once__ = unbind after the event is fired (like, _removeEventListener_)
   + For instance, in a checkout where the event should only ever fire once
+
+### 26 - Stripe Follow Along Nav
+
+```JavaScript
+setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+```
++ When entering into a non-arrow function, the value of _this_ changes, so declaring a _function()_ would prevent the use of _this.classList_
+
+
+
+```CSS
+  .dropdown {
+    opacity: 0;
+    transition: all 0.5s;
+    will-change: opacity;
+    display: none;
+  }
+
+  .trigger-enter .dropdown {
+    display: block;
+  }
+
+  .trigger-enter-active .dropdown {
+    opacity: 1;
+  }
+```
+
+```JavaScript
+function handleEnter() {
+  this.classList.add('trigger-enter');
+  setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+  ...
+```
+
++ Handling a __transition from _display: none___ with ___setTimeout()___
++ __Short-circuiting with &&__ to avoid _if_ syntax
+
+```JavaScript
+const dropdown = this.querySelector('.dropdown');
+```
++ __querySelector on _this___ to connect elements
+  + Much simpler than my passing in and _index_ value
+
+```JavaScript
+const dropdownCoords = dropdown.getBoundingClientRect();
+const navCoords = nav.getBoundingClientRect();
+
+const coords = {
+  height: dropdownCoords.height,
+  width: dropdownCoords.width,
+  top: dropdownCoords.top - navCoords.top,
+  left: dropdownCoords.left - navCoords.left
+};
+```
++ Logging entire returned object from getBoundingClientRect into a _const_
++ __Setting keys on a newly declared object__
++ _navCoords.top_ and _.left_ useful in programmatically determining top offset and accounting for any variations from extra markup, etc.
+
+```JavaScript
+background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
+```
++ Using __translate rather than left/top offsets__
