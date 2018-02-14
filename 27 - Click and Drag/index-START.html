@@ -35,6 +35,45 @@
   </div>
 
 <script>
+
+// mousedown
+// mouseleave
+// mouseout
+
+// Mouse down
+// Flag that triggers scroll action
+// Mouse starting point vs current position
+// window.scrollX += above value
+
+// Mouse up
+// Flag to false
+
+const horizontalPlane = document.querySelector('.items');
+
+let isDragging = false;
+let startingMouseX;
+let startingWindowX;
+
+function handleDrag(e) {
+  isDragging = true;
+  startingMouseX = e.screenX;
+  startingWindowX = window.scrollX;
+}
+
+function handleMove(e) {
+  // console.log(isDragging);
+
+  if (isDragging) {
+    const dragAmount = -(startingMouseX - e.screenX);
+    // window.scrollX += dragAmount;
+    // console.log();
+  }
+}
+
+window.addEventListener('mousedown', handleDrag)
+window.addEventListener('mousemove', handleMove)
+
+
 </script>
 
   </body>

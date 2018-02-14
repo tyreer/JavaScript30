@@ -1,5 +1,5 @@
 # JavaScript30
-__Lessons 23–__
+__Lessons 23–26__
 
 ### 23 - Speech Synthesis
 
