@@ -52,25 +52,33 @@ const horizontalPlane = document.querySelector('.items');
 
 let isDragging = false;
 let startingMouseX;
-let startingWindowX;
+let startingDivX;
 
 function handleDrag(e) {
   isDragging = true;
-  startingMouseX = e.screenX;
-  startingWindowX = window.scrollX;
+  // startingMouseX = e.screenX;
+  startingMouseX = e.pageX - horizontalPlane.offsetLeft;
+  startingDivX = horizontalPlane.scrollLeft;
+}
+
+function handleUp(e) {
+  isDragging = false;
 }
 
 function handleMove(e) {
-  // console.log(isDragging);
 
   if (isDragging) {
-    const dragAmount = -(startingMouseX - e.screenX);
-    // window.scrollX += dragAmount;
-    // console.log();
+    const x = e.pageX - horizontalPlane.offsetLeft;
+    // const dragAmount = (startingMouseX - e.screenX)/3;
+    const dragAmount = (x - startingMouseX);
+    console.log(dragAmount);
+    horizontalPlane.scrollLeft = startingDivX -dragAmount;
+    // horizontalPlane.scrollLeft += dragAmount;
   }
 }
 
 window.addEventListener('mousedown', handleDrag)
+window.addEventListener('mouseup', handleUp)
 window.addEventListener('mousemove', handleMove)
 
 
