@@ -56,4 +56,6 @@ slider.addEventListener('mousemove', (e) => {
   slider.scrollLeft = scrollLeft - walk;
 });
 ```
-+ _e.pageX - slider.offsetLeft_ means where the mousedown occured minus the context of the div's offset on the page
++ _e.pageX - slider.offsetLeft_ = where the mousedown occurred minus the context of the div's offset on the page
+
+### 27 - Video Speed Controller

@@ -15,6 +15,36 @@
   </div>
 
 <script>
+  const video = document.querySelector('.flex');
+  const speed = document.querySelector('.speed');
+  const bar = document.querySelector('.speed-bar');
+
+
+  const speedAttr = {
+    height: speed.offsetHeight,
+    top: speed.offsetTop,
+    currentLevel: speed.offsetTop + bar.offsetHeight
+  }
+
+  let relativeChange = (speedAttr.currentLevel + (e.pageY - speedAttr.top))
+
+
+
+// mousedown
+// Change inner text of div
+
+// Change height percentage style on div
+  // bar.style.height = `${parseFloat(bar.innerHTML) * 16.3}%`;
+
+// isDragging flag
+// change video playback
+
+// mousemove
+// if mousedown ^
+
+
+
+
 </script>
 </body>
 </html>
