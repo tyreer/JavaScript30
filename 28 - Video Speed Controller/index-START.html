@@ -18,6 +18,8 @@
   const video = document.querySelector('.flex');
   const speed = document.querySelector('.speed');
   const bar = document.querySelector('.speed-bar');
+  const rateConversionRatio = speed.offsetHeight / bar.offsetHeight;
+  let mouseIsDown = false;
 
 
   const speedAttr = {
@@ -26,7 +28,12 @@
     currentLevel: speed.offsetTop + bar.offsetHeight
   }
 
-  let relativeChange = (speedAttr.currentLevel + (e.pageY - speedAttr.top))
+  // let relativeChange = (speedAttr.currentLevel + (e.pageY - speedAttr.top))
+
+  // 1 change value of text in div
+
+
+  // 2 set style on height
 
 
 
@@ -34,7 +41,7 @@
 // Change inner text of div
 
 // Change height percentage style on div
-  // bar.style.height = `${parseFloat(bar.innerHTML) * 16.3}%`;
+
 
 // isDragging flag
 // change video playback
@@ -42,7 +49,14 @@
 // mousemove
 // if mousedown ^
 
+speed.addEventListener('mousedown', (e) => {
+  mouseIsDown = true;
+  const percentageInBar = (e.pageY - speedAttr.top) / speed.offsetHeight;
+  const playbackRate = Math.round((percentageInBar * rateConversionRatio) * 10)/10;
+  bar.innerHTML = `${playbackRate}x`
 
+  bar.style.height = `${parseFloat(bar.innerHTML) * 16.3}%`;
+});
 
 
 </script>
