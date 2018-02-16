@@ -21,42 +21,42 @@
   const rateConversionRatio = speed.offsetHeight / bar.offsetHeight;
   let mouseIsDown = false;
 
-
-  const speedAttr = {
-    height: speed.offsetHeight,
-    top: speed.offsetTop,
-    currentLevel: speed.offsetTop + bar.offsetHeight
-  }
-
-  // let relativeChange = (speedAttr.currentLevel + (e.pageY - speedAttr.top))
-
-  // 1 change value of text in div
-
-
-  // 2 set style on height
-
-
-
-// mousedown
-// Change inner text of div
-
-// Change height percentage style on div
-
-
-// isDragging flag
-// change video playback
-
-// mousemove
-// if mousedown ^
-
 speed.addEventListener('mousedown', (e) => {
   mouseIsDown = true;
-  const percentageInBar = (e.pageY - speedAttr.top) / speed.offsetHeight;
-  const playbackRate = Math.round((percentageInBar * rateConversionRatio) * 10)/10;
+
+  const percentageInBar = (e.pageY - speed.offsetTop) / speed.offsetHeight;
+  // const playbackRate = Math.round((percentageInBar * rateConversionRatio) * 10)/10;
+  const playbackRate = (percentageInBar * rateConversionRatio).toFixed(1);
   bar.innerHTML = `${playbackRate}x`
 
   bar.style.height = `${parseFloat(bar.innerHTML) * 16.3}%`;
+
+  video.playbackRate = playbackRate;
 });
+
+speed.addEventListener('mousemove', (e) => {
+  if (!mouseIsDown) return;  // stop the fn from running
+  e.preventDefault();
+
+  const percentageInBar = (e.pageY - speed.offsetTop) / speed.offsetHeight;
+  // const playbackRate = Math.round((percentageInBar * rateConversionRatio) * 10)/10;
+  const playbackRate = (percentageInBar * rateConversionRatio).toFixed(1);
+  bar.innerHTML = `${playbackRate}x`
+
+  bar.style.height = `${parseFloat(bar.innerHTML) * 16.3}%`;
+
+  video.playbackRate = playbackRate;
+});
+
+speed.addEventListener('mouseleave', () => {
+  mouseIsDown = false;
+});
+
+speed.addEventListener('mouseup', () => {
+  mouseIsDown = false;
+});
+
+
 
 
 </script>

@@ -59,3 +59,41 @@ slider.addEventListener('mousemove', (e) => {
 + _e.pageX - slider.offsetLeft_ = where the mousedown occurred minus the context of the div's offset on the page
 
 ### 27 - Video Speed Controller
+
+```JavaScript
+const speed = document.querySelector('.speed');
+const bar = speed.querySelector('.speed-bar');
+const video = document.querySelector('.flex');
+
+function handleMove(e) {
+    const y = e.pageY - this.offsetTop;
+    const percent = y / this.offsetHeight;
+    const min = 0.4;
+    const max = 4;
+    const height = Math.round(percent * 100) + '%';
+    const playbackRate = percent * (max - min) + min;
+    bar.style.height = height;
+    bar.textContent = playbackRate.toFixed(2) + '×';
+    video.playbackRate = playbackRate;
+  }
+
+speed.addEventListener('mousemove', handleMove);
+```
+__Wes:__
+```JavaScript
+const y = e.pageY - this.offsetTop;
+const percent = y / this.offsetHeight;
+```
+__Me:__
+```JavaScript
+const percentageInBar = (e.pageY - speed.offsetTop) / speed.offsetHeight;
+```
++ __Using _this_ to allow a more reusable function__. I used the element (_speed_), which seems more concrete and works just fine. I'd feel a bit nervous about _this_ here because it feels less specific and more prone to potential error.
++ But if you're adding your event listener on the explicit element already, then _this_ has a clear definition and using _speed._ could be seen as __redundant and hard coded__.
+
+```JavaScript
+const playbackRate = percent * (max - min) + min;
+```
++ Useful math to convert a percentage to a unit in a min–max context
+
++ __decimals.toFixed()__
