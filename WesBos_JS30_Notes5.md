@@ -97,3 +97,90 @@ const playbackRate = percent * (max - min) + min;
 + Useful math to convert a percentage to a unit in a min–max context
 
 + __decimals.toFixed()__
+
+### 29 - Countdown Clock
+
+```JavaScript
+const buttons = document.querySelectorAll('[data-time]');
+```
++ Data attribute as specific, declarative selector
+
+```JavaScript
+let countdown;
+
+function timer(seconds) {
+  // clear any existing timers
+  clearInterval(countdown);
+
+  const now = Date.now();
+  const then = now + seconds * 1000;
+  displayTimeLeft(seconds);
+  displayEndTime(then);
+
+  countdown = setInterval(() => {
+    const secondsLeft = Math.round((then - Date.now()) / 1000);
+    // check if we should stop it!
+    if(secondsLeft < 0) {
+      clearInterval(countdown);
+      return;
+    }
+    // display it
+    displayTimeLeft(secondsLeft);
+  }, 1000);
+}
+```
++ __Avoid decrement within setInterval__ because occasionally no fire and iOS scrolling halts interval timer
++ Solution here is to use the _fixed end time_ along with _Date.now_ inside the timer, so it doesn't really matter if a cycle is skipped because the next second will return an accurate value
+
+```JavaScript
+function displayTimeLeft(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainderSeconds = seconds % 60;
+  const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
+  document.title = display;
+  timerDisplay.textContent = display;
+}
+```
+```JavaScript
+document.title = display;
+```
++ Allows browser tab to show timer value
+
+```JavaScript
+const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
+```
++ __Ternary__ to solve __2-digit seconds__
++ Only saving this in display because it will be used in two places, otherwise inline, as below
+
+```JavaScript
+function displayEndTime(timestamp) {
+  const end = new Date(timestamp);
+  const hour = end.getHours();
+  const adjustedHour = hour > 12 ? hour - 12 : hour;
+  const minutes = end.getMinutes();
+  endTime.textContent = `Be Back At ${adjustedHour}:${minutes < 10 ? '0' : ''}${minutes}`;
+}
+
+function startTimer() {
+  const seconds = parseInt(this.dataset.time);
+  timer(seconds);
+}
+```
+
+```HTML
+<form name="customForm" id="custom">
+  <input type="text" name="minutes" placeholder="Enter Minutes">
+</form>
+```
+
+```JavaScript
+document.customForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const mins = this.minutes.value;
+  console.log(mins);
+  timer(mins * 60);
+  this.reset();
+});
+```
++ Using reset to take advantage of native form features (rather than saying something like _value=''_)
++ Can use __name attribute__ off of _this.minutes.value_
