@@ -38,6 +38,8 @@
   const moles = document.querySelectorAll('.mole');
   let moleTimer;
   let gameTimer;
+  let lastHole;
+  let gameIsOn = true;
 
   function randomTime(min, max) {
     return min + Math.random() * (max - min);
@@ -45,36 +47,53 @@
 
   function randomHole(gameIsOn) {
     const randomHoleIndex = Math.floor(Math.random() * (holes.length));
+
+    if (holes[randomHoleIndex] === lastHole) {
+      randomHole(true)
+    } else {
     const moleTime = randomTime(200, 1000);
 
     holes[randomHoleIndex].classList.add('up');
 
-    moleTimer = setInterval(() => {
+    lastHole = holes[randomHoleIndex];
+
+
+
+    moleTimer = setTimeout(() => {
       holes[randomHoleIndex].classList.remove('up');
       let wait = false;
 
-      holes.forEach((hole) => {
-        if (hole.classList.contains('up')) {
-          wait = true;
-          console.log('here');
-        }
-      });
+      //
+      // holes.forEach((hole) => {
+      //   if (hole.classList.contains('up')) {
+      //     wait = true;
+      //     console.log('here');
+      //   }
+      // });
+      // clearInterval(moleTimer);
+      // if (gameIsOn && !wait) {
+      // console.log(gameIsOn);
+      // if (gameIsOn) {
+      //   console.log(gameIsOn);
+      //   randomHole(gameIsOn);
+      // }
 
-      if (gameIsOn && !wait) {
-        randomHole(gameIsOn);
-      } else {
-        console.log(gameIsOn);
-        clearInterval(moleTimer);
-      }
+      if (gameIsOn) randomHole();
+      // } else {
+        // console.log(gameIsOn);
+
+      // }
     }, moleTime);
   }
+}
 
   function startGame() {
-    let gameIsOn = true;
 
-    gameTimer = setInterval(() => {
-      gameIsOn = false;
-      randomHole(gameIsOn)
+    // setTimeout(() => gameIsOn = true, 2000)
+
+      setTimeout(() => {
+      return gameIsOn = false;
+      // randomHole(gameIsOn)
     }, 2000);
 
     randomHole(gameIsOn);

@@ -184,3 +184,12 @@ document.customForm.addEventListener('submit', function(e) {
 ```
 + Using reset to take advantage of native form features (rather than saying something like _value=''_)
 + Can use __name attribute__ off of _this.minutes.value_
+
+### 30 - Whack A Mole
+
+```JavaScript
+setTimeout(() => {
+return gameIsOn = false;
+}, 2000);
+```
++ I was not returning from this, so I don't think it had any effect
