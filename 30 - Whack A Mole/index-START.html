@@ -45,7 +45,7 @@
     return min + Math.random() * (max - min);
   }
 
-  function randomHole(gameIsOn) {
+  function randomHole() {
     const randomHoleIndex = Math.floor(Math.random() * (holes.length));
 
     if (holes[randomHoleIndex] === lastHole) {
@@ -92,11 +92,12 @@
     // setTimeout(() => gameIsOn = true, 2000)
 
       setTimeout(() => {
-      return gameIsOn = false;
-      // randomHole(gameIsOn)
-    }, 2000);
+        console.log('herer');
+        gameIsOn = false;
+        randomHole()
+    }, 5000);
 
-    randomHole(gameIsOn);
+    randomHole();
   }
 
 </script>

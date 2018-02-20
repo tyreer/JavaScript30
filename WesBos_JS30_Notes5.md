@@ -188,8 +188,47 @@ document.customForm.addEventListener('submit', function(e) {
 ### 30 - Whack A Mole
 
 ```JavaScript
-setTimeout(() => {
-return gameIsOn = false;
-}, 2000);
+function randomTime(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
 ```
-+ I was not returning from this, so I don't think it had any effect
+
+```JavaScript
+function randomHole(holes) {
+  const idx = Math.floor(Math.random() * holes.length);
+  const hole = holes[idx];
+  if (hole === lastHole) {
+    console.log('Ah nah thats the same one bud');
+    return randomHole(holes);
+  }
+  lastHole = hole;
+  return hole;
+}
+```
+
+```JavaScript
+function peep() {
+  const time = randomTime(200, 1000);
+  const hole = randomHole(holes);
+  hole.classList.add('up');
+  setTimeout(() => {
+    hole.classList.remove('up');
+    if (!timeUp) peep();
+  }, time);
+}
+```
++ Appreciate the small functions. My work mixed the above concerns of randomHole + peep, which made it tricky to follow.
+
+```JavaScript
+setTimeout(() => timeUp = true, 10000)
+```
++ __Inline timeout__
+
+```JavaScript
+if (!timeUp) peep();
+```
++ __Inline if__
+
++ Careful not to confuse __setTimeout()__ and __setInterval()__!
++ Helpful in this instance to avoid passing in parameter for the _timeUp_ condition.
+  + I was passing this condition in and it allowed the undesired value to "leapfrog" the desired canceling condition and continue an indefinite loop
