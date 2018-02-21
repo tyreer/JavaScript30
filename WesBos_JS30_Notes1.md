@@ -38,9 +38,11 @@ Here just choosing the longest one associated with the div the transitions are t
 + _return_ allow instant ignore bc we only care about the longest one
 
 _document.querySelector(__audio[data-key="${e.keyCode}"]__);_
+
 _document.querySelector(__div[data-key=“${e.keyCode}"]__);_
 
 + Allows us to target just the first (here only) element of the type indicated and with the data attribute of the same value as the keyCode firing the event.
++ Visible UI element and desired audio file __associated with shared data attribute (data-key)__
 
 _if (!audio) __return__;_
 
@@ -139,6 +141,8 @@ inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
 + __filter: blur(var(--blur))__;
 
 + Filter style attribute on _img_ elements
+
++ UI element and desired variable __associated with shared name attribute (`--${this.name}`)__
 
 inputs.forEach(input => input.addEventListener(__'mousemove'__, handleUpdate));
 
