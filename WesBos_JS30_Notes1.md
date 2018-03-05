@@ -48,9 +48,19 @@ _if (!audio) __return__;_
 
 + Instant end if no audio element (a keyboard key without a reason to be considered).
 
+```JavaScript
+if(condition) return;
+```
++ Super terse w/o brackets or newline
+
 _audio.__currentTime__ = 0;_
 
 + Prevents needing to wait until audio element finishes to fire a new _play()_ action.
+
+```JavaScript
+<kbd>A</kbd>
+```
+> __kbd__: The HTML Keyboard Input element represents a span of inline text denoting textual user input from a keyboard, voice input, or any other text entry device.
 
 #### Robert's solution
 + Breaks out the sound and styling operations into two distinct functions
@@ -189,21 +199,34 @@ const de = links
 
 + Nice demo of targeting via the console.
 + _querySelectorAll_ is getting called to further filter through the category results
-+ I'd probably just write ```const category = document.querySelectorAll('.mw-category a');```
-+ And use: ```[...category].map()```
++ I'd probably just write
+```JavaScript
+const category = document.querySelectorAll('.mw-category a');
+```
++ And use:
+```JavaScript
+[...category].map()
+```
 
+```JavaScript
+const people = ['Beck, Glenn', 'Becker, Carl']
 const alpha = people.sort((lastOne, nextOne) => {
-  __const [aLast, aFirst] = lastOne.split(', ')__;
-
+  const [aLast, aFirst] = lastOne.split(', ');
+  const [bLast, bFirst] = nextOne.split(', ');
+  return aLast > bLast ? 1 : -1;
+});
+```
 + Elegant munging into a two-index array via split
 
-const transportation = data.__reduce__((obj, item) => {
+```JavaScript
+const transportation = data.reduce((obj, item) => {
   if (!obj[item]) {
     obj[item] = 0;
   }
   obj[item]++;
   return obj;
-}, __{}__);
+}, {});
+```
 
 + _reduce_ with an empty object as _initialValue_
 + Both adding up instances and constructing a data object
@@ -214,21 +237,24 @@ const sortedInventors = inventors.__sort__((inventorA, inventorB) => inventorA.y
 
 + Sort can determine order based on any returned value greater than 0 or less than 0. In this case, simply testing if one year has a higher number than another _would at first seem_ preferable if a bit less transparent than explicitly returning -1 or 1.
 
-+ YET, MDN indicates that not only do browsers have varying algorithms to execute sort, but "If _compareFunction_ is not supplied, elements are sorted by converting them to strings and comparing strings in Unicode code point order...because numbers are converted to strings, "80" comes before "9" in Unicode order."
++ YET, MDN indicates that not only do browsers have varying algorithms to execute sort, but...
+>"If _compareFunction_ is not supplied, elements are sorted by converting them to strings and comparing strings in Unicode code point order...because numbers are converted to strings, "80" comes before "9" in Unicode order."
 
 + At a minimum then, if I want to avoid the ternary and explicitly returning -1 vs 1, I'd need to pass in a basic _compareFunction_ as below:
 
+```JavaScript
 var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200];
-
 function compareNumbers(a, b) {
-  return a - b;
+  return parseInt(a) - parseInt(b);
 }
-
 mixedNumericArray.sort(compareNumbers);
+```
 
 + Bos's solution for (7) sort by last name is still a bit baffling to me. Since all the names start with their last name first and we're comparing strings, can't we simply run the default sort?
 
+```JavaScript
 const sortedPeople = people.sort();
+```
 
 ### 05 - Flex Panel Gallery
 
@@ -300,6 +326,7 @@ fetch(endpoint)
   ```
 + Endpoint in const allows _fetch()_ to read much cleaner
 + _cities_ gets type definition and const and then has __JSON object translated into array__ via __push() + spread__
+  + Spread syntax here is the key to getting a useful array from a JSON object
 + _fetch()_ promise handling with _then()_    
 
 ```JavaScript
@@ -456,7 +483,7 @@ fetch('https://api.github.com/users/wesbos')
 ```
 + __console.time()__ gives execution time
 
-### 09 - Hold Shift ⬇️ to Check Multiple Checkboxes
+### 10 - Hold Shift ⬇️ to Check Multiple Checkboxes
 
 + Not sure I follow what the fragility liability is in my solution
 + Bos solution is an insightful use of flags to switch behaviour within a forEach() loop.
