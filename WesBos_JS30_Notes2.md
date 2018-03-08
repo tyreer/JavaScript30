@@ -3,6 +3,23 @@ __Lessons 12–16__
 
 ### 12 - Key Sequence Detection
 
+```js
+const userKeySequence = [];
+const code = 'win'
+
+window.addEventListener('keyup', e => {
+  userKeySequence.push(e.key)
+
+  const userCode = [
+    ...userKeySequence.slice(-code.length)
+  ].join('');
+
+  if (userCode.includes(code)) {
+    console.log('boo yah');
+  }
+})
+```
+
 __My solution__
 ```JavaScript
 const userKeySequence = [];

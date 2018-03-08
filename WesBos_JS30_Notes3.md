@@ -33,15 +33,16 @@ bandName.replace(/^(a |the |an )/i, '').trim();
 
 ### 18 - Adding Up Times with Reduce
 
-+ __reduce()__
++ convertTime() function within __reduce()__
+  + Nice to separate out the munging logic
 
 __Hybrid solution__
 ```JavaScript
 const videos = [...document.querySelectorAll('[data-time]')];
 
 const convertTime = (minSec) => {
-  const [mins, secs] = minSec.split(':').map(parseFloat)
-  return (mins * 60) + secs;;
+  const [mins, secs] = minSec.split(':').map(parseFloat);
+  return (mins * 60) + secs;
 }
 
 const timeSum = videos.reduce((acc, cur) => {
