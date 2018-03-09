@@ -213,3 +213,17 @@ triggers.forEach(trigger => { trigger.addEventListener('mouseenter', highlightLi
 ```
 + __mouseenter__ event
 + __getBoundingClientRect()__ is super useful here
+
+```js
+const coords = {
+  width: linkCoords.width,
+  height: linkCoords.height,
+  top: linkCoords.top + window.scrollY,
+  left: linkCoords.left + window.scrollX
+};
+highlight.style.width = `${coords.width}px`;
+highlight.style.height = `${coords.height}px`;
+highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`;
+```
++ Bos code destructures values onto _coords_ object
+  + I prefer the inline approach I used in the first code snippet above, but I can see the benefit of including the addition logic for _top_ and _left_ in a separate location to the _style.transform_ definition.

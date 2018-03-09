@@ -41,16 +41,19 @@ options.forEach(option => option.addEventListener('change', setOption));
 speakButton.addEventListener('click', toggle);
 stopButton.addEventListener('click', () => toggle(false));
 ```
+Both part of the __Web Speech API__ native in browsers
++ __speechSynthesis__ is
+>the controller interface for the speech service; this can be used to retrieve information about the synthesis voices available on the device, start and pause speech, and other commands besides.
 
-__speechSynthesis__ is a global variable
-__SpeechSynthesisUtterance__
++ __SpeechSynthesisUtterance__ represents
+>a speech request. It contains the content the speech service should read and information about how to read it (e.g. language, pitch and volume.)
 
 __populateVoices()__
 + Quick and easy __filter()__
 
 __setVoice()__
 + Differed to mine in use of __find()__
-  + This is more declarative
+  + This is more declarative and uses the value attribute on the DOM object to explicitly correlate with the desired setting on the _msg_ object
 
 ```JavaScript
 const voiceOptions = voices
@@ -64,7 +67,8 @@ function setVoice() {
 + I connected these by carrying the index through on an option attribute
 
 __toggle()__
-+ __default parameter value__
++ __default parameter value__ with _toggle=true_
+  + This allows _toggle_ function to be used in _setVoice_ and inline on _stopButton_ to different effect
 
 ```JavaScript
 stopButton.addEventListener('click', () => toggle(false));
@@ -191,7 +195,6 @@ function handleEnter() {
   setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
   ...
 ```
-
 + Handling a __transition from _display: none___ with ___setTimeout()___
 + __Short-circuiting with &&__ to avoid _if_ syntax
 
