@@ -67,8 +67,8 @@ function setVoice() {
 + I connected these by carrying the index through on an option attribute
 
 __toggle()__
-+ __default parameter value__ with _toggle=true_
-  + This allows _toggle_ function to be used in _setVoice_ and inline on _stopButton_ to different effect
++ __default parameter value__ with _toggle(startOver = true)_
+  + This allows the _toggle_ function to be used to different effect in _setVoice_ and inline on the _stopButton_ DOM element
 
 ```JavaScript
 stopButton.addEventListener('click', () => toggle(false));
@@ -131,37 +131,40 @@ body.fixed-nav .site-wrap {
 
 ### 25 - Event Capture, Propagation, Bubbling
 
-First is capture: top down
-  + Arrow through layers
-Then bubble: back up
-+ "bubble up"
+> Event bubbling and capturing are two ways of propagating events which occur in an element that is nested within another element, when both elements have registered a handle for that event. The event propagation mode determines the order in which elements receive the event
 
 ```JavaScript
   divs.forEach(div => div.addEventListener('click', logText, {
     capture: true
   }));
 ```
-+ Third argument is __options object__
-  + __capture__ here says to fire off click events on the initial event capture decent into inner DOM element
-  + "On the way down"
-  + Default is false
++ Third argument of _addEventListener_ is the __options object__
 
-  ```JavaScript
-  e.stopPropagation(); // stop bubbling!
-  ```
+__Capture__
++ Event capturing can be thought of as an arrow cutting through layers of DOM and triggering any handles registered for that event on the way to the inner most element
++ __capture__ here says to fire off click events on the initial event capture decent into inner DOM element
++ "On the way down"
++ Event bubbling occurs on the way back up
++ __Default is false__
+
+```JavaScript
+e.stopPropagation(); // stop bubbling!
+```
+
 + Won't trigger events on the parents on the way up
- + Or _down_ if _capture_ is set to true
+ + Or on the way _down_ if _capture_ is set to true
 
-  ```JavaScript
+```JavaScript
 
-    button.addEventListener('click', () => {
-      console.log('Click!!!');
-    }, {
-      once: true
-    });
-    ```
-  + __once__ = unbind after the event is fired (like, _removeEventListener_)
-  + For instance, in a checkout where the event should only ever fire once
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: true
+  });
+  ```
+
++ __once__ = unbind after the event is fired (like, _removeEventListener_)
++ For instance, in a checkout where the event should only ever fire once
 
 ### 26 - Stripe Follow Along Nav
 

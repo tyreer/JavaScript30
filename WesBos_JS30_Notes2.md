@@ -3,23 +3,6 @@ __Lessons 12–16__
 
 ### 12 - Key Sequence Detection
 
-```js
-const userKeySequence = [];
-const code = 'win'
-
-window.addEventListener('keyup', e => {
-  userKeySequence.push(e.key)
-
-  const userCode = [
-    ...userKeySequence.slice(-code.length)
-  ].join('');
-
-  if (userCode.includes(code)) {
-    console.log('boo yah');
-  }
-})
-```
-
 __My solution__
 ```JavaScript
 const userKeySequence = [];
@@ -43,7 +26,7 @@ Bos uses __splice__ in an interesting way.
   pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
   ```
   + First parameter is starting index, second parameter is how many elements to remove
-  + A negative first parameter will start at the end of an array an move backward
+  + A negative first parameter will start at the end of an array and move backward
     + _-secretCode.length - 1_ could just be replaced by _0_ because the _pressed_ array is never allowed to get longer than the code
     + _pressed.length - secretCode.length_ will evaluate to a negative number and have no effect until _pressed_ is 1 longer than _secretCode_, which will trigger the removal of the value at index 0
 
@@ -69,6 +52,7 @@ window.addEventListener('scroll', debounce(checkScroll))
 ```
 + I chose not to implement a reappear on scroll up
 + I can see a benefit to breaking out the _const_ declarations into even smaller bits in terms of readability
++ __offsetTop__
 
 __Bos solution__
 ```JavaScript
@@ -96,6 +80,8 @@ window.addEventListener('scroll', debounce(checkSlide));
 + Not bothered by calling add/remove more than once. Is this a performance consideration or a concern I'm just making up?
 
 __CSS__
+Nice model of coordinating __opacity__, __translateX__ + __scale__ in animation
+
 ```css
 .slide-in {
   opacity:0;
@@ -128,7 +114,7 @@ const team3 = [].concat(players);
 const team4 = [...players];
 const team5 = Array.from(players);
 ```
-+ __spread__ and __Array.from__ seem like goto solutions
++ __spread__ and __Array.from__ seem like go-to solutions
 
 ```JavaScript
 const person = {
@@ -206,12 +192,18 @@ const items = JSON.parse(localStorage.items) || [];
 __Event delegation__
 
 + Problem to solve is that listening for click or change events won't work on these _li_ elements because they might not exist in the DOM at run time
-  + One option for dealing with this is to attach an event listener to a parent element (here the _ul_ itemsList) that you know will be there, and then determine which children objects to modify from that parent context
+  + One option for dealing with this is to attach an event listener to a parent element (here the _ul_) that you know will be there, and then determine which children objects to modify from that parent context
 
 + Can think of as very responsible parents, but negligent children who aren't bothered by events on them
   + Tell the parent to pass on the event to its child
   + Parent, you're the only one that is responsible here
   + The event is on something higher, so we need to manage what within that parent we actually want to affect
+
+```JavaScript
+if(!e.target.matches('input')) return;
+```
++ Here, we're saying if the clicked item is not an _input_ (as in, if it's an _li_ or _label_), then __just stop the function and return__
++ __matches()__ is a new API
 
 ```JavaScript
   function handleToggle(e) {
@@ -221,17 +213,9 @@ __Event delegation__
     localStorage.setItem('items', JSON.stringify(items))
     populateList(items, itemsList);
   }
-  itemsList.addEventListener('click', handleToggle);
   ```
-
-```JavaScript
-if(!e.target.matches('input')) return;
-```
-+ Here, we're saying if the clicked item is not an _input_ (as in, if it's an _li_ or _label_), then __just stop the function and return__
-+ __matches()__ is a new API
-
-+ Feels like a basic version of React _setState_ without the diff
-+ Feels a bit cumbersome to have to set localStorage with the updated data (_setItem()_) and then rerender the DOM (_populateList()_). Native checkbox input can handle the clicked state without the rerender. But on principle I can understand wanting the localStorage data object to match the rendered DOM elements
+  + Feels like a basic version of React _setState_ without the diff
+  + Feels a bit cumbersome to have to set localStorage with the updated data (_setItem()_) and then rerender the DOM (_populateList()_). Native checkbox input can handle the clicked state without the rerender. But on principle I can understand wanting the localStorage data object to match the rendered DOM elements
 
 ### 16 - Mouse Move Shadow
 

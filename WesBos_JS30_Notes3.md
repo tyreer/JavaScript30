@@ -85,8 +85,32 @@ __Take aways:__
 + __video stream__ from webcam
   + _getUserMedia()_
 + __debugger__ to prevent logs of repeat executions
+
+```html
+<div class="rgb">
+  <label for="rmin">Red Min:</label>
+  <input type="range" min=0 max=255 name="rmin">
+  <label for="rmax">Red Max:</label>
+  <input type="range" min=0 max=255 name="rmax">
+```
+
+```js
+document.querySelectorAll('.rgb input').forEach((input) => {
+  levels[input.name] = input.value;
+});
+...
+for (i = 0; i < pixels.data.length; i = i + 4) {
+  red = pixels.data[i + 0];
+  green = pixels.data[i + 1];
+
+  if (red >= levels.rmin
+    && green >= levels.gmin
+...
+```
+
 + Grabbing pixels off a canvas and modifying RGBA values to create a filter effect
-+ Nice model of coordinating and utilising UI _input_ levels with canvas pixels in __greenScreen()__
++ Nice model of coordinating and utilising UI _input_ names and values with canvas pixels in __greenScreen()__
+
 
 ```json
 "scripts": {
