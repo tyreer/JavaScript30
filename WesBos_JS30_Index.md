@@ -1,6 +1,6 @@
 ### Incomplete Index
 
-###### Array methods
+##### Array methods
 + filter()
   + [04 - Array Cardio Day 1](#04---array-cardio-day-1)
   + [06 - Type Ahead](#06---type-ahead)
@@ -31,7 +31,7 @@
   + [07 - Array Cardio 💪💪 Day 2](#07---array-cardio--day-2)
   + [12 - Key Sequence Detection](#12---key-sequence-detection)
 
-###### String methods
+##### String methods
 + match()
   + [06 - Type Ahead](#06---type-ahead)
 
@@ -49,7 +49,7 @@
 + split()
   + [18 - Adding Up Times with Reduce](#18---adding-up-times-with-reduce)
 
-###### Event listener types
+##### Event listener types
 + transitionend
   + [01 - JavaScript Drum Kit](#01---javascript-drum-kit)
 
@@ -60,7 +60,7 @@
 + end
   + [20 - Speech Detection](#20---speech-detection)
 
-###### Other
+##### Other
 + Date()
   + [02 - JS and CSS Clock](#02---js-and-css-clock)
 
