@@ -1,7 +1,7 @@
 # Notes on JavaScript30
 
 
-[CONTRIBUTE](.#12---Key-Sequence-Detection)
+[02 - JS and CSS Clock](#02---js-and-css-clock)
 
 Notes from the Wes Bos course.
 
