@@ -133,6 +133,14 @@ body.fixed-nav .site-wrap {
 
 > Event bubbling and capturing are two ways of propagating events which occur in an element that is nested within another element, when both elements have registered a handle for that event. The event propagation mode determines the order in which elements receive the event
 
+```html
+ <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+```
 ```JavaScript
   divs.forEach(div => div.addEventListener('click', logText, {
     capture: true
@@ -143,7 +151,7 @@ body.fixed-nav .site-wrap {
 __Capture__
 + Event capturing can be thought of as an arrow cutting through layers of DOM and triggering any handles registered for that event on the way to the inner most element
 + __capture__ here says to fire off click events on the initial event capture decent into inner DOM element
-+ "On the way down"
+  + "On the way down"
 + Event bubbling occurs on the way back up
 + __Default is false__
 
@@ -172,8 +180,6 @@ e.stopPropagation(); // stop bubbling!
 setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
 ```
 + When entering into a non-arrow function, the value of _this_ changes, so declaring a _function()_ would prevent the use of _this.classList_
-
-
 
 ```CSS
   .dropdown {

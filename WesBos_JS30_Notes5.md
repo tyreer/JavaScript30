@@ -58,7 +58,7 @@ slider.addEventListener('mousemove', (e) => {
 ```
 + _e.pageX - slider.offsetLeft_ = where the mousedown occurred minus the context of the div's offset on the page
 
-### 27 - Video Speed Controller
+### 28 - Video Speed Controller
 
 ```JavaScript
 const speed = document.querySelector('.speed');
@@ -89,7 +89,7 @@ __Me:__
 const percentageInBar = (e.pageY - speed.offsetTop) / speed.offsetHeight;
 ```
 + __Using _this_ to allow a more reusable function__. I used the element (_speed_), which seems more concrete and works just fine. I'd feel a bit nervous about _this_ here because it feels less specific and more prone to potential error.
-+ But if you're adding your event listener on the explicit element already, then _this_ has a clear definition and using _speed._ could be seen as __redundant and hard coded__.
++ But if you're adding your event listener on the explicit element already, then _this_ has a clear definition and using _speed_ could be seen as __redundant and hard coded__.
 
 ```JavaScript
 const playbackRate = percent * (max - min) + min;
@@ -150,7 +150,7 @@ document.title = display;
 const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
 ```
 + __Ternary__ to solve __2-digit seconds__
-+ Only saving this in display because it will be used in two places, otherwise inline, as below
++ Only saving this in _display_ because it will be used in two places, otherwise inline, as below
 
 ```JavaScript
 function displayEndTime(timestamp) {
@@ -177,7 +177,6 @@ function startTimer() {
 document.customForm.addEventListener('submit', function(e) {
   e.preventDefault();
   const mins = this.minutes.value;
-  console.log(mins);
   timer(mins * 60);
   this.reset();
 });
