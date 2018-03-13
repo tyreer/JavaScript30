@@ -1,6 +1,7 @@
 # Notes on JavaScript30
 
-[Test link here](#12-Key-Sequence-Detection)
+
+[CONTRIBUTE](.#12---Key-Sequence-Detection)
 
 Notes from the Wes Bos course.
 
