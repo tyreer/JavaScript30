@@ -1027,6 +1027,17 @@ __Take aways:__
   + _getUserMedia()_
 + __debugger__ to prevent logs of repeat executions
 
+```js
+navigator.mediaDevices.getUserMedia({ video: true }).then(mediaStream => {
+  video.srcObject = mediaStream;
+  video.load();
+  video.play();
+}).catch(err => {
+  console.log(err);
+})
+```
++ Updated method: __srcObject__
+
 ```html
 <div class="rgb">
   <label for="rmin">Red Min:</label>
